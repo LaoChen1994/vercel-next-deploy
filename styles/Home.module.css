@@ -1,4 +1,36 @@
 .container {
-  padding: 0 2rem;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.container h1 {
+  font-size: 188px;
+  line-height: 366px;
+  white-space: break-spaces;
+  color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+  .container  h1 {
+    font-size: 120px;
+    line-height: 220px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container  h1 {
+    font-size: 88px;
+    line-height: 168px;
+  }
+}
+
+@media screen and (max-width: 678px) {
+  .container h1 {
+    font-size: 56px;
+    line-height: 120px;
+  }
 }

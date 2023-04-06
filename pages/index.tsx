@@ -4,8 +4,9 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-        <h1>Hello NextJS</h1>
-        <p>This is PD Home</p>
+        <h1>
+            {"佛\n曰"}
+        </h1>
     </div>
   )
 }
