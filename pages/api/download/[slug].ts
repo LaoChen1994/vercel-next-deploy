@@ -19,9 +19,9 @@ export default async function handler(
         res.json({ msg: '下载链接不存在' })
     }
 
-    const files = Fs.readdirSync(Path.resolve(__dirname, '../../'))
+    const files = Fs.readdirSync(Path.resolve(__dirname, '../../../'))
 
-    logger.info(`test => ${JSON.stringify(files)}`)
+    logger.info(`test => ${JSON.stringify(files)}, ${process.env.PROTECTED_FILES_FOLDER}`)
 
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=worship.apk');
