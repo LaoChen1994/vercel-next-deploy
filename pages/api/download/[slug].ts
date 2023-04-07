@@ -19,8 +19,10 @@ export default async function handler(
 
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=worship.apk');
+
+
     await pipeline(
-        Fs.createReadStream(Path.resolve(__dirname, './assets/v1.apk')),
+        Fs.createReadStream(Path.resolve(__dirname, '../../download/v1.apk')),
         res
     );
 
