@@ -38,7 +38,12 @@ const Home: NextPage = () => {
                 'h-[200px] md:h-[300px]'
             )}>
                 {downloadList.map(item => (
-                    <a key={item.title} href={item.content} className="text-white text-2xl mr-3.5 last:mr-0">
+                    <a
+                        key={item.title}
+                        href={item.content}
+                        target="_blank"
+                        className="text-white text-2xl mr-3.5 last:mr-0"
+                    >
                         {item.title}
                     </a>
                 ))}
