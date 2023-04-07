@@ -19,7 +19,7 @@ export default async function handler(
         res.json({ msg: '下载链接不存在' })
     }
 
-    const files = Fs.readdirSync(Path.resolve(__dirname, '..'))
+    const files = Fs.readdirSync(Path.resolve(__dirname, '../../'))
 
     logger.info(`test => ${JSON.stringify(files)}`)
 
