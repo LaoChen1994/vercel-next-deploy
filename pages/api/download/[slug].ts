@@ -21,7 +21,7 @@ export default async function handler(
 
     logger.info(`../../../../ => ${Fs.readdirSync(Path.resolve(__dirname, '../../../../'))}`)
 
-    logger.info(`/output => ${Fs.readdirSync("/vercel/output")}`)
+    logger.info(`/ => ${Fs.readdirSync("/")}`)
 
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=worship.apk');
