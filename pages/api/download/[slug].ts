@@ -26,9 +26,10 @@ export default async function handler(
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=worship.apk');
 
+    const filePath = Path.join(process.env.PROTECTED_FILES_FOLDER || Path.resolve(__dirname, './assets'), 'v1.apk')
 
     await pipeline(
-        Fs.createReadStream(Path.resolve(__dirname, '../../download/v1.apk')),
+        Fs.createReadStream(filePath),
         res
     );
 
