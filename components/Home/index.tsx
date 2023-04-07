@@ -11,7 +11,7 @@ const downloadList = [
     {
         title: '安卓下载',
         type: 'link',
-        content: '/api/download/andriod'
+        content: '/download/v1.apk'
     },
     {
         title: '苹果下载',
