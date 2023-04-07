@@ -5,6 +5,8 @@ import * as stream from "stream";
 import Fs from 'fs';
 import Path from 'path';
 
+import onlyPino from 'pino'
+
 const pipeline = promisify(stream.pipeline);
 
 export default async function handler(
@@ -16,6 +18,12 @@ export default async function handler(
         res.status(400);
         res.json({ msg: '下载链接不存在' })
     }
+
+    const logger = onlyPino();
+
+    const files = Fs.readdirSync(Path.resolve(__dirname, '..'))
+
+    logger.info('test =>', files)
 
     res.setHeader('Content-Type', 'application/octet-stream');
     res.setHeader('Content-Disposition', 'attachment; filename=worship.apk');
