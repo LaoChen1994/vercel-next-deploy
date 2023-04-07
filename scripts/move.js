@@ -7,6 +7,9 @@ const DownloadAsset = Path.resolve(DownloadDir, 'assets')
 
 const downloads = Fs.readdirSync(AssestPath)
 
+console.log(downloads)
+console.log(Path.resolve(__dirname, '.'))
+
 if (!downloads.length) {
     process.exit()
 }
