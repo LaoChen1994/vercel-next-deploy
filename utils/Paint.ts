@@ -1,4 +1,4 @@
-import { defaultsDeep } from 'lodash';
+import {defaultsDeep} from 'lodash';
 
 interface IPaintProps {
     context: CanvasRenderingContext2D | null;
@@ -6,22 +6,61 @@ interface IPaintProps {
     height: number;
 }
 
-interface BorderProps {
-    padding?: number;
-    borderWidth?: number;
+interface IPosition {
+    startX: number;
+    startY: number;
+    width: number;
+    height: number;
 }
 
-const DEFAULT_BORDER: BorderProps = {
-    padding: 20,
-    borderWidth: 20
+interface RoundRectProps {
+    padding?: number;
+    borderRadius?: number | number[];
+    borderColor?: string;
+    borderWidth?: number;
+    position?: IPosition
+}
+
+interface IRoundImage {
+    url: string;
+    dx: number;
+    dy: number;
+    dw: number;
+    dh: number;
+    rect?: Omit<RoundRectProps, 'position'>
+}
+
+interface ITextProps extends Partial<CanvasTextDrawingStyles>, Pick<IPosition, 'startY' | 'startX'> {
+    text: string;
+    color?: string;
+    isStroke?: boolean
+}
+
+interface IMultiTextProps extends ITextProps {
+    maxWidth: number;
+    gap?: number;
+}
+
+const DEFAULT_BORDER: RoundRectProps = {
+    padding: 0,
+    borderRadius: 0,
+    borderColor: "#000",
+    borderWidth: 6,
+    position: {
+        startX: 0,
+        startY: 0,
+        width: 100,
+        height: 100
+    }
 }
 
 class Paint {
     private context: CanvasRenderingContext2D;
     private width: number;
     private height: number
+
     constructor(props: IPaintProps) {
-        const { width, context, height } = props
+        const {width, context, height} = props
         if (!context) {
             throw Error('Canvas Context cannot be NULL')
         }
@@ -31,38 +70,66 @@ class Paint {
         this.height = height
     }
 
-    runOuter(props: BorderProps = {}) {
-        const { context } = this;
-        const config = defaultsDeep(props, DEFAULT_BORDER) as Required<BorderProps>
-        const { padding, borderWidth } = config
+    get ctx() {
+        return this.context
+    }
 
-        const offset = padding + borderWidth
+    roundRect(props: RoundRectProps = {}) {
+        const {context} = this;
+        const config = defaultsDeep(props, DEFAULT_BORDER) as Required<RoundRectProps>
 
-        const startX = offset;
-        const startY = offset;
-        const endX = this.width - offset;
-        const endY = this.height - offset;
+        const {padding, borderRadius, borderColor, borderWidth, position} = config
+
+        let innerBorderRadius: number[];
+
+        if (typeof borderRadius === 'number') {
+            innerBorderRadius = Array.from({length: 4}).fill(borderRadius) as number[]
+        } else if (Array.isArray(borderRadius)) {
+            if (borderRadius.length >= 4) {
+                innerBorderRadius = borderRadius.slice(0, 4);
+            } else if (borderRadius.length === 3) {
+                innerBorderRadius = [...borderRadius, borderRadius[1]]
+            } else if (borderRadius.length === 2) {
+                innerBorderRadius = [...borderRadius, ...borderRadius]
+            } else {
+                innerBorderRadius = Array.from({
+                    length: 4
+                }).fill(borderRadius[0]) as number[]
+            }
+        } else {
+            innerBorderRadius = [0, 0, 0, 0]
+        }
+
+        console.log(innerBorderRadius)
+
+
+        const offset = padding
+
+        const startX = position.startX + offset;
+        const startY = position.startY + offset;
+        const endX = position.startX + position.width - offset;
+        const endY = position.startY + position.height - offset;
 
         context.beginPath();
-        context.strokeStyle = "white";
-        context.lineWidth = 4;
+        context.strokeStyle = borderColor;
+        context.lineWidth = borderWidth;
 
         // top
-        context.moveTo(startX + borderWidth, startY);
-        context.lineTo(endX - borderWidth, startY);
-        context.arcTo(endX, startY, endX, startY + borderWidth, borderWidth)
+        context.moveTo(startX + innerBorderRadius[0], startY);
+        context.lineTo(endX - innerBorderRadius[1], startY);
+        context.arcTo(endX, startY, endX, startY + innerBorderRadius[1], innerBorderRadius[1])
 
         // right
-        context.lineTo(endX, endY - borderWidth)
-        context.arcTo(endX, endY, endX - borderWidth, endY, borderWidth)
+        context.lineTo(endX, endY - innerBorderRadius[2])
+        context.arcTo(endX, endY, endX - innerBorderRadius[2], endY, innerBorderRadius[2])
 
         // bottom
-        context.lineTo(startX + borderWidth, endY)
-        context.arcTo(startX, endY, startX, endY - borderWidth, borderWidth)
+        context.lineTo(startX + innerBorderRadius[3], endY)
+        context.arcTo(startX, endY, startX, endY - innerBorderRadius[3], innerBorderRadius[3])
 
         // left
-        context.lineTo(startX, startY + borderWidth)
-        context.arcTo(startX, startY, startX + borderWidth, startY, borderWidth)
+        context.lineTo(startX, startY + innerBorderRadius[0])
+        context.arcTo(startX, startY, startX + innerBorderRadius[0], startY, innerBorderRadius[0])
 
         context.stroke();
 
@@ -70,10 +137,106 @@ class Paint {
     }
 
     fill(color: string) {
-        const { context } = this
+        const {context} = this
 
         context.fillStyle = color
         context.fill()
+
+        return this
+    }
+
+    drawRoundImage(props: IRoundImage): Promise<void> {
+        const {context} = this
+        const {url, rect, dw, dh, dx, dy} = props;
+
+        this.roundRect({
+            ...rect,
+            position: {
+                startX: dx,
+                startY: dy,
+                width: dw,
+                height: dh
+            }
+        })
+
+        return new Promise((res, rej) => {
+            context.clip();
+            const image = new Image()
+
+            image.src = url;
+            image.onload = () => {
+                context.drawImage(image, dx, dy, dw, dh)
+                res()
+            }
+        })
+    }
+
+    drawText(props: ITextProps) {
+        const {
+            startX,
+            startY,
+            text,
+            font = "18px",
+            fontKerning = 'normal',
+            textBaseline = 'middle',
+            direction = "inherit",
+            textAlign = "left",
+            color = "#000",
+            isStroke
+        } = props
+
+        const { ctx } = this;
+        ctx.font = font;
+        ctx.fontKerning = fontKerning;
+        ctx.textBaseline = textBaseline;
+        ctx.textAlign = textAlign
+        ctx.direction = direction;
+        ctx.textAlign = "left"
+
+        if (isStroke) {
+            ctx.strokeStyle = color;
+            ctx.strokeText(text, startX, startY)
+            return this
+        }
+
+        ctx.fillStyle = color;
+        ctx.fillText(text, startX, startY)
+
+        return this
+    }
+
+    drawMultiTexts(props: IMultiTextProps) {
+        const { text, startX, startY, gap = 10, maxWidth, ...res } = props
+        const { ctx } = this
+
+        if (ctx.measureText(text).width <= maxWidth) {
+            // 一行写的下直接写
+            this.drawText({
+                text,
+                startX,
+                startY,
+                ...res
+            })
+        } else {
+            let lineText = '';
+            const fontSize = +((res.font || '').match(/(\d+)px/i)?.[0] ?? 18)
+
+            ctx.font = res.font!
+
+            for (let i = 0; i < text.length; i++) {
+                lineText += text[i];
+
+                if (ctx.measureText(lineText).width > maxWidth) {
+                    this.drawText({
+                        text: lineText.slice(0, lineText.length - 1),
+                        startX,
+                        startY,
+                        ...res
+                    })
+                }
+            }
+        }
+
     }
 }
 
