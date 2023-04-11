@@ -1,4 +1,5 @@
 import {defaultsDeep} from 'lodash';
+import {compileNonPath} from "next/dist/shared/lib/router/utils/prepare-destination";
 
 interface IPaintProps {
     context: CanvasRenderingContext2D | null;
@@ -100,9 +101,6 @@ class Paint {
             innerBorderRadius = [0, 0, 0, 0]
         }
 
-        console.log(innerBorderRadius)
-
-
         const offset = padding
 
         const startX = position.startX + offset;
@@ -176,22 +174,21 @@ class Paint {
             startX,
             startY,
             text,
-            font = "18px",
-            fontKerning = 'normal',
-            textBaseline = 'middle',
-            direction = "inherit",
-            textAlign = "left",
+            font,
+            fontKerning,
+            textBaseline,
+            direction,
+            textAlign,
             color = "#000",
             isStroke
         } = props
 
         const { ctx } = this;
-        ctx.font = font;
-        ctx.fontKerning = fontKerning;
-        ctx.textBaseline = textBaseline;
-        ctx.textAlign = textAlign
-        ctx.direction = direction;
-        ctx.textAlign = "left"
+        ctx.font = font || "18px";
+        ctx.fontKerning = fontKerning || 'normal';
+        ctx.textBaseline = textBaseline || 'middle';
+        ctx.textAlign = textAlign || "left"
+        ctx.direction = direction || "inherit";
 
         if (isStroke) {
             ctx.strokeStyle = color;
@@ -219,7 +216,8 @@ class Paint {
             })
         } else {
             let lineText = '';
-            const fontSize = +((res.font || '').match(/(\d+)px/i)?.[0] ?? 18)
+            let lines = 0
+            const fontSize = +((res.font || '').match(/(\d+)px/i)?.[1] ?? 18)
 
             ctx.font = res.font!
 
@@ -230,13 +228,17 @@ class Paint {
                     this.drawText({
                         text: lineText.slice(0, lineText.length - 1),
                         startX,
-                        startY,
+                        startY: startY + lines * (fontSize + gap),
                         ...res
                     })
+
+                    lines++;
+                    lineText = lineText[lineText.length - 1];
                 }
             }
         }
 
+        return this
     }
 }
 
