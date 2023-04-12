@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Paint from "../../utils/Paint";
 import Head from "next/head";
 
-import QRCode from 'qrcode';
+import QRCode, {toDataURL} from 'qrcode';
 
 const PAINTER = {
     width: 400,
@@ -48,7 +48,7 @@ const Poster = () => {
             })
             .fill("#231F2F")
             .drawRoundImage({
-                url: 'https://img01.yzcdn.cn/upload_files/2023/03/31/FlKlHVNMi0tHg9ZOCisl3ipxL8ke.png',
+                url: '/header.png',
                 dx: 0,
                 dy: 0,
                 dw: PAINTER.width - 4,
@@ -78,26 +78,18 @@ const Poster = () => {
                 maxHeight: 400
             })
             .drawText({
-                text: "这是一个测试文本",
-                font: '28px serif',
-                startX: 30,
-                startY: 50,
-                color: '#f44',
-                isStroke: true
-            })
-            .drawText({
-                text: "这是一个副标题",
+                text: '"我要如何找到工作？"',
                 font: '16px serif',
                 startX: 30,
-                startY: 88,
-                color: "green",
+                startY: 80,
+                color: '#fff',
             })
             .drawText({
-                text: "换行的副标题",
-                font: '16px serif',
+                text: "佛曰：",
+                font: '36px serif',
                 startX: 30,
-                startY: 108,
-                color: "green",
+                startY: 150,
+                color: "#fff",
             })
 
         const code = await generateQRCode("https://www.youzan.com");
@@ -109,6 +101,13 @@ const Poster = () => {
             dw: 80,
             dh: 80
         })
+    }
+
+    const saveImage = async () => {
+        const el = ref.current;
+
+        if (!el) return;
+        el.toDataURL()
     }
 
     useEffect(() => {
