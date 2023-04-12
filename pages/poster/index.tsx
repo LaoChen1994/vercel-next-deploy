@@ -3,6 +3,8 @@ import classNames from "classnames";
 import Paint from "../../utils/Paint";
 import Head from "next/head";
 
+import QRCode from 'qrcode';
+
 const PAINTER = {
     width: 400,
     height: 600
@@ -12,8 +14,25 @@ const Poster = () => {
     const ref = useRef<HTMLCanvasElement | null>(null)
     const [patinter, setPainter] = useState<Paint | null>();
 
+    const generateQRCode = (url: string): Promise<string> => {
+        return new Promise((res, rej) => {
+            QRCode.toDataURL(url, {
+                type: "image/jpeg",
+                margin: 2,
+                width: 300,
+            }, (err, url) => {
+                if (err) {
+                    rej(err)
+                }
+                res(url)
+            })
+        })
+    }
+
     const runPainter = async () => {
-        if (!patinter) { return; }
+        if (!patinter) {
+            return;
+        }
 
         await patinter
             .roundRect({
@@ -28,6 +47,20 @@ const Poster = () => {
                 }
             })
             .fill("#231F2F")
+            .drawRoundImage({
+                url: 'https://img01.yzcdn.cn/upload_files/2023/03/31/FlKlHVNMi0tHg9ZOCisl3ipxL8ke.png',
+                dx: 0,
+                dy: 0,
+                dw: PAINTER.width - 4,
+                dh: 200,
+                rect: {
+                    borderRadius: [10, 10, 0, 0],
+                    borderWidth: 0,
+                    borderColor: 'transparent'
+                }
+            })
+
+        patinter
             .drawMultiTexts({
                 text: "确定职业目标：首先要确定自己想要从事什么职业，包括职业方向、行业、职位等。" +
                     "准备好求职材料：制作简历、求职信和其他必要的求职材料，以展示自己的技能、经验和能力。" +
@@ -41,44 +74,40 @@ const Poster = () => {
                 startX: 20,
                 gap: 10,
                 startY: 240,
-                color: "#ddd"
+                color: "#ddd",
+                maxHeight: 400
+            })
+            .drawText({
+                text: "这是一个测试文本",
+                font: '28px serif',
+                startX: 30,
+                startY: 50,
+                color: '#f44',
+                isStroke: true
+            })
+            .drawText({
+                text: "这是一个副标题",
+                font: '16px serif',
+                startX: 30,
+                startY: 88,
+                color: "green",
+            })
+            .drawText({
+                text: "换行的副标题",
+                font: '16px serif',
+                startX: 30,
+                startY: 108,
+                color: "green",
             })
 
+        const code = await generateQRCode("https://www.youzan.com");
 
-        await patinter
-            .drawRoundImage({
-                url: 'https://img01.yzcdn.cn/upload_files/2023/03/31/FlKlHVNMi0tHg9ZOCisl3ipxL8ke.png',
-                dx: 4,
-                dy: 4,
-                dw: PAINTER.width - 8,
-                dh: 200,
-                rect: {
-                    borderRadius: [10, 10, 0, 0],
-                    borderWidth: 0
-                }
-            })
-
-        patinter.drawText({
-            text: "这是一个测试文本",
-            font: '28px serif',
-            startX: 30,
-            startY: 50,
-            color: '#f44',
-            isStroke: true
-        })
-        .drawText({
-            text: "这是一个副标题",
-            font: '16px',
-            startX: 30,
-            startY: 100,
-            color: "#000",
-        })
-        .drawText({
-            text: "换行的副标题",
-            font: '16px',
-            startX: 30,
-            startY: 140,
-            color: "#000",
+        patinter.drawImage({
+            url: code,
+            dx: PAINTER.width - 110,
+            dy: 500,
+            dw: 80,
+            dh: 80
         })
     }
 
@@ -113,9 +142,10 @@ const Poster = () => {
                     'bg-white hover:bg-gray-100 text-gray-800 font-semibold',
                     'py-2 px-4 border border-gray-400 rounded shadow',
                     'mb-3'
-                )} onClick={runPainter}>点击绘制</button>
+                )} onClick={runPainter}>点击绘制
+                </button>
 
-                <canvas ref={ref} width={PAINTER.width} height={PAINTER.height} />
+                <canvas ref={ref} width={PAINTER.width} height={PAINTER.height}/>
             </div>
         </>
     )

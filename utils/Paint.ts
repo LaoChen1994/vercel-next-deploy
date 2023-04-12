@@ -22,12 +22,15 @@ interface RoundRectProps {
     position?: IPosition
 }
 
-interface IRoundImage {
+interface IImageProps {
     url: string;
     dx: number;
     dy: number;
     dw: number;
     dh: number;
+}
+
+interface IRoundImage extends IImageProps {
     rect?: Omit<RoundRectProps, 'position'>
 }
 
@@ -39,6 +42,7 @@ interface ITextProps extends Partial<CanvasTextDrawingStyles>, Pick<IPosition, '
 
 interface IMultiTextProps extends ITextProps {
     maxWidth: number;
+    maxHeight?: number;
     gap?: number;
 }
 
@@ -143,9 +147,27 @@ class Paint {
         return this
     }
 
+    drawImage(props: IImageProps): Promise<void> {
+        const { context } = this
+        const { dx, dy, dw, dh, url } = props
+
+        return new Promise((res, rej) => {
+            const image = new Image()
+
+            image.src = url;
+            image.onload = () => {
+                context.drawImage(image, dx, dy, dw, dh)
+                res()
+            }
+
+        })
+    }
+
     drawRoundImage(props: IRoundImage): Promise<void> {
         const {context} = this
         const {url, rect, dw, dh, dx, dy} = props;
+
+        context.save()
 
         this.roundRect({
             ...rect,
@@ -158,14 +180,16 @@ class Paint {
         })
 
         return new Promise((res, rej) => {
-            context.clip();
             const image = new Image()
 
             image.src = url;
             image.onload = () => {
+                context.clip();
                 context.drawImage(image, dx, dy, dw, dh)
+                context.restore()
                 res()
             }
+
         })
     }
 
@@ -203,7 +227,7 @@ class Paint {
     }
 
     drawMultiTexts(props: IMultiTextProps) {
-        const { text, startX, startY, gap = 10, maxWidth, ...res } = props
+        const { text, startX, startY, gap = 10, maxWidth, maxHeight, ...res } = props
         const { ctx } = this
 
         if (ctx.measureText(text).width <= maxWidth) {
@@ -225,12 +249,26 @@ class Paint {
                 lineText += text[i];
 
                 if (ctx.measureText(lineText).width > maxWidth) {
+                    let paintText = lineText.slice(0, lineText.length - 1)
+                    let isEnd = false;
+
+                    // 下一行绘制的高度已经超过最大高度了
+                    // 那本行就需要展示...
+                    if (maxHeight && startY + ((lines + 1) * fontSize + gap) > maxHeight) {
+                        paintText = lineText.slice(0, lineText.length - 2) + "...";
+                        isEnd = true
+                    }
+
                     this.drawText({
-                        text: lineText.slice(0, lineText.length - 1),
+                        text: paintText,
                         startX,
                         startY: startY + lines * (fontSize + gap),
                         ...res
                     })
+
+                    if (isEnd) {
+                        break;
+                    }
 
                     lines++;
                     lineText = lineText[lineText.length - 1];
