@@ -33,6 +33,7 @@ interface IRoundImage extends IImageProps {
     rect?: Omit<RoundRectProps, 'position'>
 }
 
+// eslint-disable-next-line no-undef
 interface ITextProps extends Partial<CanvasTextDrawingStyles>, Pick<IPosition, 'startY' | 'startX'> {
     text: string;
     color?: string;
