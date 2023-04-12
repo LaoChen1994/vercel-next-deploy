@@ -75,7 +75,7 @@ const Poster = () => {
                 gap: 10,
                 startY: 240,
                 color: "#ddd",
-                maxHeight: 400
+                maxHeight: 500
             })
             .drawText({
                 text: '"我要如何找到工作？"',
@@ -97,7 +97,7 @@ const Poster = () => {
         patinter.drawImage({
             url: code,
             dx: PAINTER.width - 110,
-            dy: 500,
+            dy: 100,
             dw: 80,
             dh: 80
         })
