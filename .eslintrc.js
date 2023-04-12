@@ -1,3 +1,5 @@
+const path = require("path")
+
 module.exports = {
   env: {
     browser: true,
@@ -25,7 +27,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       1,
       {
-        extensions: ['.tsx', '.jsx', '.js'],
+        extensions: ['.tsx', '.jsx', '.jsx'],
       },
     ],
     'react/function-component-definition': [1, {
@@ -38,7 +40,17 @@ module.exports = {
     }],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-    "import/no-import-module-exports": "off",
-    "import/no-extraneous-dependencies": "off",
+    "import/extensions": ["error", "never"],
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".tsx", ".ts"],
+    },
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true,
+        project: path.resolve(__dirname, "./tsconfig.json"),
+      },
+    },
   },
 };
