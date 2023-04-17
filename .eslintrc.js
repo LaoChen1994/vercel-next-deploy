@@ -24,6 +24,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': [
       1,
       {
