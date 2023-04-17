@@ -7,7 +7,7 @@ interface IDownloadProps {
     content: string;
 }
 
-const downloadList = [
+const downloadList: IDownloadProps[] = [
   {
     title: '安卓下载',
     type: 'link',

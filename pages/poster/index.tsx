@@ -164,6 +164,7 @@ const Poster = () => {
               'mb-3',
             )}
             onClick={saveImage}
+            type="button"
           >
             点击下载
           </button>
