@@ -1,0 +1,29 @@
+{
+  "name": "pd-worship-utils",
+  "version": "1.0.0",
+  "description": "pd Web Utils",
+  "author": "Cyx",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "browser": "./umd/index.js",
+  "types": "src/index.ts",
+  "devDependencies": {
+    "@types/lodash": "^4.14.194",
+    "typescript": "^5.0.4"
+  },
+  "files": [
+    "es",
+    "lib",
+    "umd",
+    "src",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "npx rollup --bundleConfigAsCjs -c",
+    "clean": "rm -rf umd es lib"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

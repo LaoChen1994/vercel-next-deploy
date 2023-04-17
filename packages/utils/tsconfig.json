@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "noEmit": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "importHelpers": false,
+    "declaration": true,
+    "module": "ESNext",
+    "target": "ES2015",
+    "baseUrl": "./",
+    "sourceRoot": "./src",
+    "declarationDir": ".",
+    "strict": true
+  },
+  "exclude": [
+    "lib",
+    "es",
+    "umd",
+    "src/**/examples"
+  ],
+}
