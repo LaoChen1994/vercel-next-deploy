@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Home from "../components/Home";
+import Home from "./components/Home";
 
-const Index = () => (
+const IndexPage = () => (
   <>
     <Head>
       <title>佛曰</title>
@@ -12,4 +12,4 @@ const Index = () => (
   </>
 )
 
-export default Index
+export default IndexPage

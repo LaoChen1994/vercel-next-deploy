@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Head from "next/head";
 
 import QRCode from 'qrcode';
-import Paint from "../../utils/Paint";
+import { Paint } from "pd-worship-utils";
 
 const PAINTER = {
   width: 400,
@@ -120,13 +120,9 @@ const Poster = () => {
     const el = ref.current;
     if (!el) return;
 
-    const { width, height } = PAINTER
-
     const ctx = el.getContext('2d')
     const paint = new Paint({
       context: ctx,
-      width,
-      height,
     });
 
     setPainter(paint)

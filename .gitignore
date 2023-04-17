@@ -5,11 +5,15 @@
 /.pnp
 .pnp.js
 
+.next
+run
+out
+
 # testing
 /coverage
 
 # next.js
-/.next/
+.next
 /out/
 
 # production

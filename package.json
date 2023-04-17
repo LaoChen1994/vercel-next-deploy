@@ -1,41 +1,32 @@
 {
   "name": "cyx-web",
+  "version": "1.0.0",
+  "description": "worship web",
+  "main": "index.js",
+  "repository": "git@github.com:LaoChen1994/vercel-next-deploy.git",
+  "author": "Pidan <chenyixiang_cyx@youzan.com>",
+  "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "vercel-build": "next build",
+    "dev:apps": "yarn workspace pd-worship-web dev",
+    "build:apps": "yarn workspace pd-worship-web build"
   },
   "dependencies": {
-    "@types/qrcode": "^1.5.0",
-    "classnames": "^2.3.2",
     "lodash": "^4.17.21",
-    "next": "13.2.4",
-    "pino": "^8.11.0",
-    "qrcode": "^1.5.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "sass": "^1.60.0"
+    "rollup": "^3.20.4",
+    "typescript": "^5.0.4",
+    "vercel": "^28.18.5"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.192",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.31",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.36.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "13.2.1",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "postcss": "^8.4.21",
-    "prettier": "^2.8.7",
-    "tailwindcss": "^3.3.1",
-    "typescript": "5.0.2"
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/lodash": "^4.14.194",
+    "concurrently": "^8.0.1",
+    "rollup-plugin-clear": "^2.0.7"
   }
 }

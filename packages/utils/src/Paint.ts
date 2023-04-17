@@ -1,9 +1,7 @@
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 interface IPaintProps {
     context: CanvasRenderingContext2D | null;
-    width: number;
-    height: number;
 }
 
 interface IPosition {
@@ -62,19 +60,13 @@ const DEFAULT_BORDER: RoundRectProps = {
 class Paint {
   private context: CanvasRenderingContext2D;
 
-  private width: number;
-
-  private height: number
-
   constructor(props: IPaintProps) {
-    const { width, context, height } = props
+    const { context } = props
     if (!context) {
       throw Error('Canvas Context cannot be NULL')
     }
 
     this.context = context;
-    this.width = width;
-    this.height = height
   }
 
   get ctx() {
