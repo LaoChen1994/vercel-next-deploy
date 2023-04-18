@@ -9,14 +9,17 @@ export default [{
     input: "src/index.ts",
     output: {
         name: "pd-worship-utils",
-        file: pkg.browser
+        file: pkg.browser,
     },
     plugins: [
         resolve(),
-        commonjs(),
         typescript({
-            tsconfig: "./tsconfig.json"
-        })
+            tsconfig: "./tsconfig.json",
+            compilerOptions: {
+                target: "ES3"
+            }
+        }),
+        commonjs()
     ]
 }, {
     input: "src/index.ts",
@@ -31,6 +34,9 @@ export default [{
         }
     ],
     plugins: [typescript({
-        tsconfig: "./tsconfig.json"
+        tsconfig: "./tsconfig.json",
+        compilerOptions: {
+            target: "ES3"
+        }
     })]
 }]

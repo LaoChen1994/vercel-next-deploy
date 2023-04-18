@@ -17,6 +17,17 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 function __rest(s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -29,7 +40,17 @@ function __rest(s, e) {
     return t;
 }
 
-const DEFAULT_BORDER = {
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+var DEFAULT_BORDER = {
     padding: 0,
     borderRadius: 0,
     borderColor: "#000",
@@ -38,25 +59,30 @@ const DEFAULT_BORDER = {
         startX: 0,
         startY: 0,
         width: 100,
-        height: 100,
-    },
+        height: 100
+    }
 };
-class Paint {
-    constructor(props) {
-        const { context } = props;
+var Paint = /** @class */ (function () {
+    function Paint(props) {
+        var context = props.context;
         if (!context) {
             throw Error('Canvas Context cannot be NULL');
         }
         this.context = context;
     }
-    get ctx() {
-        return this.context;
-    }
-    roundRect(props = {}) {
-        const { context } = this;
-        const config = defaultsDeep(props, DEFAULT_BORDER);
-        const { padding, borderRadius, borderColor, borderWidth, position, } = config;
-        let innerBorderRadius;
+    Object.defineProperty(Paint.prototype, "ctx", {
+        get: function () {
+            return this.context;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Paint.prototype.roundRect = function (props) {
+        if (props === void 0) { props = {}; }
+        var context = this.context;
+        var config = defaultsDeep(props, DEFAULT_BORDER);
+        var padding = config.padding, borderRadius = config.borderRadius, borderColor = config.borderColor, borderWidth = config.borderWidth, position = config.position;
+        var innerBorderRadius;
         if (typeof borderRadius === 'number') {
             innerBorderRadius = Array.from({ length: 4 }).fill(borderRadius);
         }
@@ -65,25 +91,25 @@ class Paint {
                 innerBorderRadius = borderRadius.slice(0, 4);
             }
             else if (borderRadius.length === 3) {
-                innerBorderRadius = [...borderRadius, borderRadius[1]];
+                innerBorderRadius = __spreadArray(__spreadArray([], borderRadius, true), [borderRadius[1]], false);
             }
             else if (borderRadius.length === 2) {
-                innerBorderRadius = [...borderRadius, ...borderRadius];
+                innerBorderRadius = __spreadArray(__spreadArray([], borderRadius, true), borderRadius, true);
             }
             else {
                 innerBorderRadius = Array.from({
-                    length: 4,
+                    length: 4
                 }).fill(borderRadius[0]);
             }
         }
         else {
             innerBorderRadius = [0, 0, 0, 0];
         }
-        const offset = padding;
-        const startX = position.startX + offset;
-        const startY = position.startY + offset;
-        const endX = position.startX + position.width - offset;
-        const endY = position.startY + position.height - offset;
+        var offset = padding;
+        var startX = position.startX + offset;
+        var startY = position.startY + offset;
+        var endX = position.startX + position.width - offset;
+        var endY = position.startY + position.height - offset;
         context.beginPath();
         context.strokeStyle = borderColor;
         context.lineWidth = borderWidth;
@@ -102,49 +128,49 @@ class Paint {
         context.arcTo(startX, startY, startX + innerBorderRadius[0], startY, innerBorderRadius[0]);
         context.stroke();
         return this;
-    }
-    fill(color) {
-        const { context } = this;
+    };
+    Paint.prototype.fill = function (color) {
+        var context = this.context;
         context.fillStyle = color;
         context.fill();
         return this;
-    }
-    drawImage(props) {
-        const { context } = this;
-        const { dx, dy, dw, dh, url, } = props;
-        return new Promise((res) => {
-            const image = new Image();
+    };
+    Paint.prototype.drawImage = function (props) {
+        var context = this.context;
+        var dx = props.dx, dy = props.dy, dw = props.dw, dh = props.dh, url = props.url;
+        return new Promise(function (res) {
+            var image = new Image();
             image.src = url;
-            image.onload = () => {
+            image.onload = function () {
                 context.drawImage(image, dx, dy, dw, dh);
                 res();
             };
         });
-    }
-    drawRoundImage(props) {
-        const { context } = this;
-        const { url, rect, dw, dh, dx, dy, } = props;
+    };
+    Paint.prototype.drawRoundImage = function (props) {
+        var context = this.context;
+        var url = props.url, rect = props.rect, dw = props.dw, dh = props.dh, dx = props.dx, dy = props.dy;
         context.save();
-        this.roundRect(Object.assign(Object.assign({}, rect), { position: {
+        this.roundRect(__assign(__assign({}, rect), { position: {
                 startX: dx,
                 startY: dy,
                 width: dw,
-                height: dh,
+                height: dh
             } }));
-        return new Promise((res) => {
-            const image = new Image();
+        return new Promise(function (res) {
+            var image = new Image();
             image.src = url;
-            image.onload = () => {
+            image.onload = function () {
                 context.clip();
                 context.drawImage(image, dx, dy, dw, dh);
                 context.restore();
                 res();
             };
         });
-    }
-    drawText(props) {
-        const { startX, startY, text, font, fontKerning, textBaseline, direction, textAlign, color = "#000", isStroke, } = props;
-        const { ctx } = this;
+    };
+    Paint.prototype.drawText = function (props) {
+        var startX = props.startX, startY = props.startY, text = props.text, font = props.font, fontKerning = props.fontKerning, textBaseline = props.textBaseline, direction = props.direction, textAlign = props.textAlign, _a = props.color, color = _a === void 0 ? "#000" : _a, isStroke = props.isStroke;
+        var ctx = this.ctx;
         ctx.font = font || "18px";
         ctx.fontKerning = fontKerning || 'normal';
         ctx.textBaseline = textBaseline || 'middle';
@@ -158,34 +184,32 @@ class Paint {
         ctx.fillStyle = color;
         ctx.fillText(text, startX, startY);
         return this;
-    }
-    drawMultiTexts(props) {
+    };
+    Paint.prototype.drawMultiTexts = function (props) {
         var _a, _b;
-        const { text, startX, startY, gap = 10, maxWidth, maxHeight } = props, res = __rest(props, ["text", "startX", "startY", "gap", "maxWidth", "maxHeight"]);
-        const { ctx } = this;
+        var text = props.text, startX = props.startX, startY = props.startY, _c = props.gap, gap = _c === void 0 ? 10 : _c, maxWidth = props.maxWidth, maxHeight = props.maxHeight, res = __rest(props, ["text", "startX", "startY", "gap", "maxWidth", "maxHeight"]);
+        var ctx = this.ctx;
         if (ctx.measureText(text).width <= maxWidth) {
             // 一行写的下直接写
-            this.drawText(Object.assign({ text,
-                startX,
-                startY }, res));
+            this.drawText(__assign({ text: text, startX: startX, startY: startY }, res));
         }
         else {
-            let lineText = '';
-            let lines = 0;
-            const fontSize = +((_b = (_a = (res.font || '').match(/(\d+)px/i)) === null || _a === void 0 ? void 0 : _a[1]) !== null && _b !== void 0 ? _b : 18);
+            var lineText = '';
+            var lines = 0;
+            var fontSize = +((_b = (_a = (res.font || '').match(/(\d+)px/i)) === null || _a === void 0 ? void 0 : _a[1]) !== null && _b !== void 0 ? _b : 18);
             ctx.font = res.font;
-            for (let i = 0; i < text.length; i++) {
+            for (var i = 0; i < text.length; i++) {
                 lineText += text[i];
                 if (ctx.measureText(lineText).width > maxWidth) {
-                    let paintText = lineText.slice(0, lineText.length - 1);
-                    let isEnd = false;
+                    var paintText = lineText.slice(0, lineText.length - 1);
+                    var isEnd = false;
                     // 下一行绘制的高度已经超过最大高度了
                     // 那本行就需要展示...
                     if (maxHeight && startY + ((lines + 1) * fontSize + gap) > maxHeight) {
-                        paintText = `${lineText.slice(0, lineText.length - 2)}...`;
+                        paintText = "".concat(lineText.slice(0, lineText.length - 2), "...");
                         isEnd = true;
                     }
-                    this.drawText(Object.assign({ text: paintText, startX, startY: startY + lines * (fontSize + gap) }, res));
+                    this.drawText(__assign({ text: paintText, startX: startX, startY: startY + lines * (fontSize + gap) }, res));
                     if (isEnd) {
                         break;
                     }
@@ -195,7 +219,8 @@ class Paint {
             }
         }
         return this;
-    }
-}
+    };
+    return Paint;
+}());
 
 exports.Paint = Paint;
