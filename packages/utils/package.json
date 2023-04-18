@@ -4,9 +4,10 @@
   "description": "pd Web Utils",
   "author": "Cyx",
   "license": "MIT",
-  "module": "./src/index.ts",
+  "module": "./es/index.js",
   "browser": "./cjs/index.js",
-  "types": "./src/index.ts",
+  "typings": "./src/index.ts",
+  "sideEffects": false,
   "devDependencies": {
     "@types/lodash": "^4.14.194",
     "typescript": "^5.0.4"

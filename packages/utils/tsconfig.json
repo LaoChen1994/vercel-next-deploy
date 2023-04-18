@@ -13,6 +13,7 @@
     "importHelpers": false,
     "declaration": false,
     "target": "ES2015",
+    "module": "ESNext",
     "baseUrl": "./src",
     "sourceRoot": "./",
     "strict": true
