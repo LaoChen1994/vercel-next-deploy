@@ -14,7 +14,7 @@
   "scripts": {
     "clean": "npx turbo clean",
     "vercel-build": "next build",
-    "build:packages": "npx turbo build --filter=!./packages/apps",
+    "build:packages": "npx turbo build --filter=!./apps",
     "dev:apps": "yarn build:packages && yarn workspace pd-worship-web dev",
     "build:apps": "yarn workspace pd-worship-web build"
   },
