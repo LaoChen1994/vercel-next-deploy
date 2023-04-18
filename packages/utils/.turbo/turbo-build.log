@@ -1,0 +1,14 @@
+$ npx rollup --bundleConfigAsCjs -c
+[36m
+[1msrc/index.ts[22m → [1m./umd/index.js[22m...[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS5107: Option 'target=ES3' is deprecated and will stop functioning in TypeScript 5.5. Specify compilerOption '"ignoreDeprecations": "5.0"' to silence this error.[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript: Rollup 'sourcemap' option must be set to generate source maps.[39m[22m
+[32mcreated [1m./umd/index.js[22m in [1m866ms[22m[39m
+[36m
+[1msrc/index.ts[22m → [1m./lib/index.js[22m...[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS5107: Option 'target=ES3' is deprecated and will stop functioning in TypeScript 5.5. Specify compilerOption '"ignoreDeprecations": "5.0"' to silence this error.[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript: Rollup 'sourcemap' option must be set to generate source maps.[39m[22m
+[1m[33m(!) Unresolved dependencies[39m[22m
+[90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
+[1mlodash/defaultsDeep[22m (imported by "src/Paint.ts")
+[32mcreated [1m./lib/index.js[22m in [1m406ms[22m[39m

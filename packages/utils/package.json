@@ -5,7 +5,7 @@
   "author": "Cyx",
   "license": "MIT",
   "main": "./lib/index.js",
-  "module": "./es/index.js",
+  "module": "./src/index.ts",
   "browser": "./umd/index.js",
   "types": "src/index.ts",
   "devDependencies": {
@@ -13,7 +13,6 @@
     "typescript": "^5.0.4"
   },
   "files": [
-    "es",
     "lib",
     "umd",
     "src",

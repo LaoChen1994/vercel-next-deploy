@@ -223,4 +223,15 @@ var Paint = /** @class */ (function () {
     return Paint;
 }());
 
+function downloadCanvas() {
+    console.log(123);
+    return 1;
+}
+
+var Save = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    downloadCanvas: downloadCanvas
+});
+
 exports.Paint = Paint;
+exports.Saver = Save;

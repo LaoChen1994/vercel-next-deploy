@@ -23,16 +23,10 @@ export default [{
     ]
 }, {
     input: "src/index.ts",
-    output: [
-        {
+    output: {
             file: pkg.main,
             format: "cjs"
-        },
-        {
-            file: pkg.module,
-            format: "es"
-        }
-    ],
+    },
     plugins: [typescript({
         tsconfig: "./tsconfig.json",
         compilerOptions: {

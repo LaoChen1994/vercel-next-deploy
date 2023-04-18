@@ -12,12 +12,14 @@
   ],
   "scripts": {
     "vercel-build": "next build",
-    "dev:apps": "yarn workspace pd-worship-web dev",
+    "build:packages": "npx turbo build --filter=!./packages/apps",
+    "dev:apps": "yarn build:packages && yarn workspace pd-worship-web dev",
     "build:apps": "yarn workspace pd-worship-web build"
   },
   "dependencies": {
     "lodash": "^4.17.21",
     "rollup": "^3.20.4",
+    "turbo": "^1.9.3",
     "typescript": "^5.0.4",
     "vercel": "^28.18.5"
   },

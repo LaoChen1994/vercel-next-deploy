@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "./tsconfig.base.json"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build", "clean"],
+      "outputs": [
+        "./packages/apps/.next/**",
+        "!./packages/apps/.next/cache/**",
+        "lib/**",
+        "umd/**"
+      ],
+      "cache": true
+    },
+    "clean": {
+      "inputs": ["src/**"]
+    }
+  }
+}
