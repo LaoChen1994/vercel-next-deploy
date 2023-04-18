@@ -1,4 +1,4 @@
 {
-  "buildCommand": "yarn build:apps",
+  "buildCommand": "npx turbo build",
   "outputDirectory": "./packages/apps/.next"
 }

@@ -4,5 +4,11 @@
 ### 开发
 
 ```bash
-yarn dev
+yarn dev:apps
+```
+
+### 打包
+
+```bash
+npx turbo build
 ```

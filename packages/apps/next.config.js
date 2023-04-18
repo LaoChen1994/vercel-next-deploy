@@ -12,6 +12,9 @@ const nextConfig = {
       permanent: true,
     }]
   },
+  transpilePackages: [
+    'pd-worship-utils',
+  ],
 }
 
 module.exports = nextConfig

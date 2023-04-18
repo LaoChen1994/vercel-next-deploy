@@ -4,24 +4,24 @@
   "description": "pd Web Utils",
   "author": "Cyx",
   "license": "MIT",
-  "main": "./lib/index.js",
-  "module": "./es/index.js",
-  "browser": "./umd/index.js",
-  "types": "src/index.ts",
+  "module": "./src/index.ts",
+  "browser": "./cjs/index.js",
+  "types": "./src/index.ts",
   "devDependencies": {
     "@types/lodash": "^4.14.194",
     "typescript": "^5.0.4"
   },
   "files": [
-    "es",
     "lib",
-    "umd",
+    "es",
     "src",
     "package.json"
   ],
   "scripts": {
-    "build": "npx rollup --bundleConfigAsCjs -c",
-    "clean": "rm -rf umd es lib"
+    "build:es": "tsc -p ./tsconfig.json --outDir es",
+    "build:cjs": "tsc -p tsconfig.json --module commonjs --outDir cjs",
+    "build": "concurrently yarn:build:*",
+    "clean": "rm -rf es cjs"
   },
   "dependencies": {
     "lodash": "^4.17.21"

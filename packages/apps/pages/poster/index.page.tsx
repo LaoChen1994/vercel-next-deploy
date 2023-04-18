@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Head from "next/head";
 
 import QRCode from 'qrcode';
-import { Paint } from "pd-worship-utils";
+import { Paint, Saver } from "pd-worship-utils";
 
 const PAINTER = {
   width: 400,
@@ -104,16 +104,7 @@ const Poster = () => {
   const saveImage = async () => {
     const el = ref.current;
 
-    if (!el) return;
-
-    const imageData = el.toDataURL("image/png", 1)
-    const downloadLink = document.createElement("a");
-
-    downloadLink.href = imageData;
-    downloadLink.download = "post.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    await Saver.downloadCanvas({ el })
   }
 
   useEffect(() => {
