@@ -16,15 +16,15 @@ info  - Finalizing page optimization...
 Route (pages)                              Size     First Load JS
 ┌   /_app                                  0 B            73.5 kB
 ├ ○ /404                                   181 B          73.7 kB
-├ ○ /home                                  1.35 kB        74.8 kB
-└ ○ /poster                                16.5 kB          90 kB
-+ First Load JS shared by all              75.5 kB
+├ ○ /home                                  1.35 kB        74.9 kB
+└ ○ /poster                                17.3 kB        90.8 kB
++ First Load JS shared by all              75.6 kB
   ├ chunks/framework-19f3649580393c10.js   45.2 kB
   ├ chunks/main-54379c1fb512e6dc.js        27.1 kB
   ├ chunks/pages/_app-e0813aeb50a8e58f.js  287 B
-  ├ chunks/webpack-ee7e63bc15b31913.js     815 B
+  ├ chunks/webpack-38cee4c0e358b1a3.js     862 B
   └ css/a143b01ac3460792.css               2.04 kB
 
 ○  (Static)  automatically rendered as static HTML (uses no initial props)
 
-Done in 5.20s.
+Done in 9.56s.
