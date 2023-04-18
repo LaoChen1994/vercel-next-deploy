@@ -18,6 +18,8 @@ out
 
 # production
 /build
+/packages/**/cjs
+/packages/**/es
 
 # misc
 .DS_Store
@@ -39,6 +41,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+/**/.turbo
 
 # typescript
 *.tsbuildinfo

@@ -102,21 +102,9 @@ const Poster = () => {
   }
 
   const saveImage = async () => {
-    if (Saver.downloadCanvas()) {
-      return
-    }
     const el = ref.current;
 
-    if (!el) return;
-
-    const imageData = el.toDataURL("image/png", 1)
-    const downloadLink = document.createElement("a");
-
-    downloadLink.href = imageData;
-    downloadLink.download = "post.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    await Saver.downloadCanvas({ el })
   }
 
   useEffect(() => {

@@ -1,5 +1,0 @@
-$ concurrently yarn:build:*
-[cjs] $ tsc -p tsconfig.json --module commonjs --outDir cjs
-[es] $ tsc -p ./tsconfig.json --outDir es
-[cjs] yarn run build:cjs exited with code 0
-[es] yarn run build:es exited with code 0

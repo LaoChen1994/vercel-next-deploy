@@ -4,7 +4,6 @@
   "description": "pd Web Utils",
   "author": "Cyx",
   "license": "MIT",
-  "main": "./es/index.js",
   "module": "./src/index.ts",
   "browser": "./cjs/index.js",
   "types": "./src/index.ts",
