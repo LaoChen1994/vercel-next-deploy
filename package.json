@@ -8,14 +8,16 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "./apps"
   ],
   "scripts": {
     "clean": "npx turbo clean",
     "vercel-build": "next build",
-    "build:packages": "npx turbo build --filter=!./packages/apps",
-    "dev:apps": "yarn build:packages && yarn workspace pd-worship-web dev",
-    "build:apps": "yarn workspace pd-worship-web build"
+    "dev": "yarn build:packages && yarn workspace pd-worship-web dev",
+    "build:packages": "npx turbo build --filter=!./apps",
+    "build:apps": "yarn workspace pd-worship-web build",
+    "publish:packages": "npx turbo publish --filter=!./apps"
   },
   "dependencies": {
     "lodash": "^4.17.21",

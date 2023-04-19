@@ -3,24 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "node_modules/.bin/next dev",
+    "build": "node_modules/.bin/next build",
+    "start": "node_modules/.bin/next start",
+    "lint": "node_modules/.bin/next lint"
   },
   "dependencies": {
     "classnames": "^2.3.2",
     "lodash": "^4.17.21",
     "next": "^13.3.0",
+    "pd-worship-utils": "*",
     "pino": "^8.11.0",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.60.0",
-    "typescript": "^5.0.4",
-    "pd-worship-utils": "*"
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
+    "@types/classnames": "^2.3.1",
     "@types/lodash": "^4.14.192",
     "@types/node": "18.15.11",
     "@types/qrcode": "^1.5.0",

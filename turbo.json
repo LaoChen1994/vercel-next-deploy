@@ -7,10 +7,10 @@
     "build": {
       "dependsOn": ["^build", "clean"],
       "outputs": [
-        "./packages/apps/.next/**",
-        "!./packages/apps/.next/cache/**",
-        "lib/**",
-        "umd/**"
+        "./apps/.next/**",
+        "!./apps/.next/cache/**",
+        "packages/**/cjs/**",
+        "packages/**/es/**"
       ],
       "cache": true
     },

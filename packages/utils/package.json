@@ -1,12 +1,13 @@
 {
   "name": "pd-worship-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "pd Web Utils",
   "author": "Cyx",
   "license": "MIT",
-  "module": "./src/index.ts",
-  "browser": "./cjs/index.js",
-  "types": "./src/index.ts",
+  "main": "./cjs/index.js",
+  "module": "./es/index.js",
+  "typings": "./src/index.ts",
+  "sideEffects": false,
   "devDependencies": {
     "@types/lodash": "^4.14.194",
     "typescript": "^5.0.4"
