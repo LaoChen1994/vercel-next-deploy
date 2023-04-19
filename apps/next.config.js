@@ -1,3 +1,5 @@
+const Path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -15,6 +17,14 @@ const nextConfig = {
   transpilePackages: [
     'pd-worship-utils',
   ],
+  webpack: (webpackConfig) => {
+    const config = webpackConfig
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'pd-worship-utils': Path.resolve(__dirname, "../packages/utils/src"),
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
