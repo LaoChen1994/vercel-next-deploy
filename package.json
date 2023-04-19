@@ -14,9 +14,10 @@
   "scripts": {
     "clean": "npx turbo clean",
     "vercel-build": "next build",
+    "dev": "yarn build:packages && yarn workspace pd-worship-web dev",
     "build:packages": "npx turbo build --filter=!./apps",
-    "dev:apps": "yarn build:packages && yarn workspace pd-worship-web dev",
-    "build:apps": "yarn workspace pd-worship-web build"
+    "build:apps": "yarn workspace pd-worship-web build",
+    "publish:packages": "npx turbo publish --filter=!./apps"
   },
   "dependencies": {
     "lodash": "^4.17.21",
