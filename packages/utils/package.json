@@ -21,7 +21,7 @@
   "scripts": {
     "build:es": "tsc -p ./tsconfig.json --outDir es",
     "build:cjs": "tsc -p tsconfig.json --module commonjs --outDir cjs",
-    "build": "concurrently yarn:build:*",
+    "build": "npx concurrently yarn:build:*",
     "clean": "rm -rf es cjs"
   },
   "dependencies": {
