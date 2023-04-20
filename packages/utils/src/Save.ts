@@ -5,7 +5,10 @@ interface IDownloadProps {
 
 export async function downloadCanvas (props: IDownloadProps): Promise<void> {
     const { el, type = 'png' } = props
-    if (!el) return;
+    if (!el) {
+        throw Error("no canvas element");
+        return;
+    }
     if (typeof window === undefined) return;
 
     const imageData = el.toDataURL(`image/${type}`, 1)
