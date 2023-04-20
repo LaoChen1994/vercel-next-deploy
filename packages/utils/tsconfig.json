@@ -12,10 +12,10 @@
     "esModuleInterop": true,
     "importHelpers": false,
     "declaration": false,
-    "target": "ES2015",
+    "target": "ES5",
     "module": "ESNext",
     "baseUrl": "./src",
-    "sourceRoot": "./",
+    "sourceMap": false,
     "strict": true
   },
   "exclude": [
