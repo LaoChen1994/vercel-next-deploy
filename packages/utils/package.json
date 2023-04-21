@@ -25,6 +25,7 @@
     "clean": "rm -rf es cjs"
   },
   "dependencies": {
+    "@mdx-js/react": "^2.3.0",
     "lodash": "^4.17.21"
   }
 }
