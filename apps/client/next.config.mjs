@@ -39,7 +39,7 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       // 如果需要dev场景实时编译包 需要在这里加入alias 在dev模式场景实时完成包的编译
-      'pd-worship-utils': Path.resolve(__dirname, "../packages/utils/src"),
+      'pd-worship-utils': Path.resolve(__dirname, "../../packages/utils/src"),
     }
 
     return config
